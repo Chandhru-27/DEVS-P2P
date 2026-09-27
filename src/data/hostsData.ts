@@ -6,8 +6,8 @@ export const eventHostsData: EventHost[] = [
     name: 'Sai Srikar',
     role: 'Lead Organizer & AI Engineer',
     headline: 'Founder @ DEVs P2P • AI Systems & Deep Learning',
-    topicOrFocus: 'AI/ML Engineering Roadmap & Real-World Portfolio Systems',
-    bio: 'Leading the DEVs P2P AI/ML initiative. Focused on breaking down academic barriers, building end-to-end neural network architectures, and mentoring developers transitioning into machine learning.',
+    topicOrFocus: 'AI/ML Engineering Roadmap & Portfolio Capstones',
+    bio: 'Guiding the overall curriculum, hands-on neural network implementation, and career transitions into AI engineering.',
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     initials: 'SS',
     socials: {
@@ -22,8 +22,8 @@ export const eventHostsData: EventHost[] = [
     name: 'Alex Rivera',
     role: 'MLOps & Systems Lead',
     headline: 'Senior ML Infrastructure Engineer',
-    topicOrFocus: 'Production Model Serving, Docker Containers & CI/CD Pipelines',
-    bio: 'Specializes in bridging the gap between Jupyter notebooks and high-throughput production clusters. Experienced in Kubernetes, vLLM serving, MLflow tracking, and model monitoring.',
+    topicOrFocus: 'FastAPI Serving, Docker Containers & CI/CD Pipelines',
+    bio: 'Bridging notebooks to scalable production with vLLM serving, MLflow tracking, and live concept drift monitoring.',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
     initials: 'AR',
     socials: {
@@ -38,8 +38,8 @@ export const eventHostsData: EventHost[] = [
     name: 'Elena Rostova',
     role: 'GenAI & LLM Architect',
     headline: 'NLP Researcher & AI Agent Developer',
-    topicOrFocus: 'Retrieval-Augmented Generation (RAG), Vector DBs & LangGraph Agents',
-    bio: 'Passionate about modern generative architectures, context retrieval with hybrid search, and constructing stateful multi-agent systems with evaluation-driven benchmarks.',
+    topicOrFocus: 'Hybrid RAG, Vector Databases & LangGraph Agents',
+    bio: 'Designing modern generative architectures, context retrieval with dense/sparse search, and autonomous multi-agent graphs.',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
     initials: 'ER',
     socials: {
@@ -54,8 +54,8 @@ export const eventHostsData: EventHost[] = [
     name: 'David Chen',
     role: 'Data Science & Math Lead',
     headline: 'Quantitative Researcher & Applied Mathematician',
-    topicOrFocus: 'Linear Algebra Foundations, Optimization Dynamics & Statistical Inference',
-    bio: 'Focuses on intuitive mathematical reasoning behind deep learning loss surfaces, gradient backpropagation dynamics, and vectorized scientific computation with NumPy and Polars.',
+    topicOrFocus: 'Linear Algebra, Optimization & Scientific Computing',
+    bio: 'Breaking down intuitive matrix geometry, multivariable backpropagation dynamics, and vectorized computation in NumPy.',
     avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
     initials: 'DC',
     socials: {
