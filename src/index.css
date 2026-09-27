@@ -36,3 +36,78 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* Roadmap Flow Animations */
+@keyframes beamTravel {
+  0% {
+    top: -15%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+.flow-beam-line {
+  position: absolute;
+  width: 2px;
+  height: 90px;
+  background: linear-gradient(180deg, transparent, #e4e4e7, #a1a1aa, transparent);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  animation: beamTravel 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes pipelinePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(228, 228, 231, 0.4);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px 4px rgba(228, 228, 231, 0.25);
+  }
+}
+
+.pulse-node {
+  animation: pipelinePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes dashFlow {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.flow-dash {
+  stroke-dasharray: 6 6;
+  animation: dashFlow 1.6s linear infinite;
+}
+
+@keyframes flowChevrons {
+  0% {
+    opacity: 0.2;
+    transform: translateY(-2px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateY(-2px);
+  }
+}
+
+.animated-chevron {
+  animation: flowChevrons 1.8s ease-in-out infinite;
+}
