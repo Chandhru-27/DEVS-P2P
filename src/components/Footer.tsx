@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, Heart, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { GithubIcon, DiscordIcon, LinkedinIcon, XIcon } from './Icons';
 import { communityInfo } from '../data/socialsData';
 
@@ -9,126 +9,113 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border-t border-slate-800/80 bg-[#070b13] text-slate-400 text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Col 1: Brand */}
-          <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-blue-500 text-white">
-                <Brain className="w-4 h-4" />
+    <footer className="border-t border-zinc-800/80 bg-[#09090b] text-zinc-400 text-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+          {/* Brand */}
+          <div className="md:col-span-2 space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-center w-7 h-7 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-100 font-mono font-bold text-xs">
+                P2P
               </div>
-              <span className="font-extrabold text-base text-white">
+              <span className="font-bold text-sm text-zinc-100">
                 DEVs P2P AI/ML
               </span>
             </div>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              An open, peer-to-peer curriculum and knowledge hub created to break down barriers to entry in Artificial Intelligence and Machine Learning.
+            <p className="text-zinc-500 text-xs leading-relaxed max-w-sm">
+              An open, peer-to-peer curriculum and knowledge hub designed to break down barriers to entry in Artificial Intelligence and Machine Learning.
             </p>
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-2 pt-1">
               <a
                 href={communityInfo.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors"
                 title="GitHub"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-3.5 h-3.5" />
               </a>
               <a
                 href="https://discord.gg/invite/devs-p2p"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors"
                 title="Discord"
               >
-                <DiscordIcon className="w-4 h-4" />
+                <DiscordIcon className="w-3.5 h-3.5" />
               </a>
               <a
                 href="https://linkedin.com/company/devs-p2p-ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors"
                 title="LinkedIn"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon className="w-3.5 h-3.5" />
               </a>
               <a
                 href="https://x.com/DevsP2PAI"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
-                title="X (Twitter)"
+                className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors"
+                title="X"
               >
-                <XIcon className="w-4 h-4" />
+                <XIcon className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
 
-          {/* Col 2: Navigation */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider">
-              Roadmap Milestones
+          {/* Quick links */}
+          <div className="space-y-2.5">
+            <h4 className="font-semibold text-zinc-300 text-xs font-mono uppercase tracking-wider">
+              Navigation
             </h4>
-            <ul className="space-y-2">
-              <li><a href="#phase-1" className="hover:text-purple-300 transition-colors">Phase 1: Math & Python Foundations</a></li>
-              <li><a href="#phase-2" className="hover:text-purple-300 transition-colors">Phase 2: Data Science & Wrangling</a></li>
-              <li><a href="#phase-3" className="hover:text-purple-300 transition-colors">Phase 3: Classical Machine Learning</a></li>
-              <li><a href="#phase-4" className="hover:text-purple-300 transition-colors">Phase 4: Deep Learning & PyTorch</a></li>
-              <li><a href="#phase-5" className="hover:text-purple-300 transition-colors">Phase 5: Generative AI & LLMs</a></li>
-              <li><a href="#phase-6" className="hover:text-purple-300 transition-colors">Phase 6: MLOps & Production</a></li>
+            <ul className="space-y-1.5 text-zinc-400">
+              <li><a href="#hosts" className="hover:text-zinc-200 transition-colors">Event Hosts & Mentors</a></li>
+              <li><a href="#roadmap" className="hover:text-zinc-200 transition-colors">Curriculum Roadmap</a></li>
+              <li><a href="#resources" className="hover:text-zinc-200 transition-colors">Curated Resources</a></li>
+              <li><a href="#projects" className="hover:text-zinc-200 transition-colors">Capstone Projects</a></li>
             </ul>
           </div>
 
-          {/* Col 3: Community & Repo */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider">
-              Open Source & Community
+          {/* Open Source */}
+          <div className="space-y-2.5">
+            <h4 className="font-semibold text-zinc-300 text-xs font-mono uppercase tracking-wider">
+              Open Source
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5 text-zinc-400">
               <li>
-                <a href={communityInfo.repoUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <GithubIcon className="w-3.5 h-3.5 text-purple-400" />
+                <a href={communityInfo.repoUrl} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-200 transition-colors">
                   GitHub Repository
                 </a>
               </li>
               <li>
-                <a href={`${communityInfo.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  Report an Issue / Typo
+                <a href={`${communityInfo.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-200 transition-colors">
+                  Submit Feedback / Issues
                 </a>
               </li>
               <li>
-                <a href="#socials" className="hover:text-white transition-colors">
-                  Discord & Study Pods
-                </a>
-              </li>
-              <li>
-                <a href="#projects" className="hover:text-white transition-colors">
-                  Project Blueprints
+                <a href="#socials" className="hover:text-zinc-200 transition-colors">
+                  Discord Study Pods
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-500 text-xs">
-            <span>Built with</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            <span>by and for the open developer community.</span>
+        {/* Bottom */}
+        <div className="pt-6 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-500 font-mono text-[11px]">
+          <div>
+            DEVs P2P AI/ML • Released under the MIT License
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-slate-500 text-xs">Released under MIT License</span>
-            <button
-              onClick={scrollToTop}
-              className="flex items-center gap-1 text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 transition-colors"
-            >
-              <span>Back to top</span>
-              <ArrowUp className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-1 text-zinc-400 hover:text-zinc-200 bg-zinc-900 hover:bg-zinc-850 px-2.5 py-1 rounded border border-zinc-800 transition-colors"
+          >
+            <span>Top</span>
+            <ArrowUp className="w-3 h-3" />
+          </button>
         </div>
       </div>
     </footer>

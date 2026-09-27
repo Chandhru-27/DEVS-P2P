@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 
 interface ProgressBannerProps {
   completedCount: number;
@@ -14,58 +14,44 @@ export const ProgressBanner: React.FC<ProgressBannerProps> = ({
 }) => {
   const percent = totalTopics > 0 ? Math.round((completedCount / totalTopics) * 100) : 0;
 
-  const getMotivation = () => {
-    if (percent === 0) return 'Start ticking off topics as you learn to track your journey!';
-    if (percent < 25) return 'Solid foundation! Consistency is the superpower in AI/ML.';
-    if (percent < 50) return 'Over a quarter way there! The math and data analysis are clicking.';
-    if (percent < 75) return 'Phenomenal progress! You are entering advanced deep learning and LLMs.';
-    if (percent < 100) return 'Almost an AI engineer! Complete your MLOps production capstones!';
-    return '100% Completed! You are fully equipped to build, train, and deploy AI systems!';
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900/80 to-blue-950/40 border border-purple-500/20 p-5 sm:p-6 backdrop-blur-xl shadow-xl">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center shrink-0">
-              <Trophy className="w-6 h-6 text-purple-400" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-base sm:text-lg font-bold text-white">Your AI/ML Learning Journey</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-medium">
-                  {completedCount} of {totalTopics} Skills Mastered
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-300 mt-0.5">{getMotivation()}</p>
-            </div>
+      <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700/80 flex items-center justify-center text-xs font-mono font-bold text-zinc-300 shrink-0">
+            {percent}%
           </div>
-
-          <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-            {completedCount > 0 && (
-              <button
-                onClick={onResetProgress}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
-                title="Reset local storage tracking"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                Reset
-              </button>
-            )}
-            <div className="text-right">
-              <div className="text-2xl font-black text-white tracking-tight">{percent}%</div>
-              <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Completed</div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-zinc-200">Interactive Curriculum Tracker</h3>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">
+                {completedCount} / {totalTopics} Modules Mastered
+              </span>
             </div>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Mark topics as done in the roadmap below to maintain an offline record of your learning journey.
+            </p>
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="mt-4 w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-700/50">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-500 ease-out shadow-lg shadow-purple-500/50"
-            style={{ width: `${percent}%` }}
-          />
+        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+          {completedCount > 0 && (
+            <button
+              onClick={onResetProgress}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Reset</span>
+            </button>
+          )}
+
+          {/* Progress track */}
+          <div className="w-32 sm:w-44 bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="h-full bg-zinc-200 rounded-full transition-all duration-300"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
         </div>
       </div>
     </div>

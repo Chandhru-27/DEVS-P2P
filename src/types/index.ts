@@ -67,3 +67,23 @@ export interface SocialLink {
   primaryColor: string;
   badge?: string;
 }
+
+export interface HostSocials {
+  github?: string;
+  linkedin?: string;
+  x?: string;
+  email?: string;
+  portfolio?: string;
+}
+
+export interface EventHost {
+  id: string;
+  name: string;
+  role: string;
+  headline: string;
+  topicOrFocus: string;
+  bio: string;
+  avatarUrl: string;
+  initials: string;
+  socials: HostSocials;
+}

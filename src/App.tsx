@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { EventHostsSection } from './components/EventHostsSection';
 import { ProgressBanner } from './components/ProgressBanner';
 import { RoadmapView } from './components/RoadmapView';
 import { ResourcesDirectory } from './components/ResourcesDirectory';
@@ -10,6 +11,7 @@ import { Footer } from './components/Footer';
 import { Preloader } from './components/Preloader';
 import { ContributeModal } from './components/ContributeModal';
 
+import { eventHostsData } from './data/hostsData';
 import { roadmapData } from './data/roadmapData';
 import { resourcesData } from './data/resourcesData';
 import { projectsData } from './data/projectsData';
@@ -90,7 +92,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-purple-600/30 selection:text-purple-200">
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans selection:bg-zinc-800 selection:text-white">
       {/* Custom Preloader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
@@ -108,6 +110,9 @@ export const App: React.FC = () => {
           onExploreRoadmap={scrollToRoadmap}
           onExploreResources={scrollToResources}
         />
+
+        {/* 4 Event Hosts & Speakers Section */}
+        <EventHostsSection hosts={eventHostsData} />
 
         {/* Progress Tracker Banner */}
         <ProgressBanner

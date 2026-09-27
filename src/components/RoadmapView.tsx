@@ -23,34 +23,34 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   });
 
   return (
-    <section id="roadmap" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="roadmap" className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs font-mono font-medium mb-3">
             <Layers className="w-3.5 h-3.5" />
-            <span>Structured Learning Path</span>
+            <span>Curriculum Architecture</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            The Complete AI/ML Roadmap
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
+            Comprehensive AI & ML Roadmap
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-400 max-w-2xl">
-            6 progressive milestones designed to take you from foundational Python & linear algebra to deep neural networks, large language models, and high-performance MLOps serving.
+          <p className="mt-2 text-xs sm:text-sm text-zinc-400 max-w-2xl leading-relaxed">
+            Six progressive phases engineered to take you from foundational mathematics to high-throughput production MLOps deployment.
           </p>
         </div>
 
         {/* Filters and Controls */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Level Filter Tabs */}
-          <div className="flex items-center p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium">
+          <div className="flex items-center p-1 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium">
             {(['All', 'Beginner', 'Intermediate', 'Advanced'] as const).map((lvl) => (
               <button
                 key={lvl}
                 onClick={() => setLevelFilter(lvl)}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
+                className={`px-3 py-1 rounded-md transition-all ${
                   levelFilter === lvl
-                    ? 'bg-purple-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-zinc-100 text-zinc-950 font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
                 {lvl}
@@ -61,17 +61,17 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           {/* Expand/Collapse Toggle */}
           <button
             onClick={() => setExpandAll(!expandAll)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-xs font-medium text-zinc-300 transition-colors"
           >
             {expandAll ? (
               <>
-                <ChevronUp className="w-3.5 h-3.5 text-purple-400" />
-                <span>Collapse Details</span>
+                <ChevronUp className="w-3.5 h-3.5 text-zinc-400" />
+                <span>Collapse</span>
               </>
             ) : (
               <>
-                <ChevronDown className="w-3.5 h-3.5 text-purple-400" />
-                <span>Expand All Modules</span>
+                <ChevronDown className="w-3.5 h-3.5 text-zinc-400" />
+                <span>Expand All</span>
               </>
             )}
           </button>
@@ -79,7 +79,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
       </div>
 
       {/* Phases Stack */}
-      <div className="space-y-8 relative">
+      <div className="space-y-6">
         {filteredPhases.map((phase) => (
           <PhaseCard
             key={`${phase.id}-${expandAll}`}
