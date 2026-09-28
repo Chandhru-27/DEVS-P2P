@@ -1,101 +1,92 @@
-import React, { useState, useEffect } from 'react';
-import { Terminal } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
 export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
+  const [phase, setPhase] = useState<'in' | 'out'>('in');
   const [progress, setProgress] = useState(0);
-  const [stageIndex, setStageIndex] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
-
-  const stages = [
-    'Initializing curriculum schema...',
-    'Loading mathematical foundations...',
-    'Mounting data science pipelines...',
-    'Configuring neural network modules...',
-    'Indexing generative AI & agent models...',
-    'Verifying MLOps serving protocols...',
-    'System ready.',
-  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setIsFadingOut(true);
-            setTimeout(onComplete, 500);
-          }, 250);
-          return 100;
-        }
-        const increment = Math.floor(Math.random() * 9) + 5;
-        const next = Math.min(prev + increment, 100);
+    // Check if user previously loaded in this session
+    const isLoaded = sessionStorage.getItem('p2p_preloader_seen');
+    if (isLoaded) {
+      onComplete();
+      return;
+    }
 
-        const nextStage = Math.min(
-          Math.floor((next / 100) * stages.length),
-          stages.length - 1
-        );
-        setStageIndex(nextStage);
+    const start = Date.now();
+    const duration = 1400; // Ethereal cinematic duration
 
-        return next;
-      });
-    }, 60);
+    const tick = () => {
+      const elapsed = Date.now() - start;
+      const p = Math.min(elapsed / duration, 1);
+      // Cubic ease-out
+      const eased = 1 - Math.pow(1 - p, 3);
+      setProgress(Math.round(eased * 100));
 
-    return () => clearInterval(interval);
-  }, [onComplete, stages.length]);
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        setPhase('out');
+        sessionStorage.setItem('p2p_preloader_seen', 'true');
+        setTimeout(onComplete, 500);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  }, [onComplete]);
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#09090b] text-zinc-100 transition-opacity duration-500 ease-out ${
-        isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#000000] text-zinc-100 transition-all duration-500 ease-out select-none ${
+        phase === 'out' ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
-      <div className="relative flex flex-col items-center max-w-sm w-full px-6 text-center">
-        {/* Minimal Icon Symbol */}
-        <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-sm">
-          <div className="w-3.5 h-3.5 bg-zinc-100 rounded-sm animate-pulse" />
+      {/* Background ambient radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-white/[0.04] blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="relative flex flex-col items-center max-w-lg w-full px-6 text-center z-10">
+        {/* Prominent Large DEVS Logo */}
+        <div className="relative mb-8 transition-transform duration-700 hover:scale-102">
+          <img
+            src="/devs-logo.png"
+            alt="DEVS"
+            className="w-64 sm:w-80 md:w-96 h-auto drop-shadow-[0_0_35px_rgba(255,255,255,0.2)] object-contain"
+          />
         </div>
 
-        {/* Brand */}
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className="text-base font-bold tracking-tight text-zinc-100">DEVs P2P</span>
-          <span className="text-zinc-500 text-xs font-mono">/</span>
-          <span className="text-xs font-medium text-zinc-400 font-mono tracking-wider">AI • ML</span>
+        {/* Subtle Category Pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-400 text-[11px] font-mono tracking-widest uppercase mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+          <span>Peer-to-Peer AI & Machine Learning</span>
         </div>
 
-        <p className="text-[11px] text-zinc-500 font-mono tracking-wide mb-6">
-          Architecting learning roadmap
-        </p>
-
-        {/* Minimal Progress Bar */}
-        <div className="w-full bg-zinc-900 rounded-full h-1 overflow-hidden mb-3 border border-zinc-800/80">
+        {/* Sleek Minimalist Progress Bar */}
+        <div className="w-56 sm:w-64 h-[2px] bg-zinc-900 rounded-full overflow-hidden border border-white/5 relative">
           <div
-            className="h-full bg-zinc-200 transition-all duration-150 ease-out"
+            className="h-full bg-gradient-to-r from-zinc-400 via-white to-zinc-400 transition-all duration-100 ease-out rounded-full shadow-[0_0_12px_rgba(255,255,255,0.8)]"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        {/* Progress & Stage */}
-        <div className="w-full flex items-center justify-between text-[11px] text-zinc-500 font-mono">
-          <span className="flex items-center gap-1.5 truncate max-w-[220px] text-left">
-            <Terminal className="w-3 h-3 text-zinc-400 shrink-0" />
-            <span className="truncate">{stages[stageIndex]}</span>
-          </span>
-          <span className="font-semibold text-zinc-300">{progress}%</span>
+        {/* Numeric Progress Counter */}
+        <div className="mt-3 flex items-center justify-between w-56 sm:w-64 text-[10px] font-mono text-zinc-500">
+          <span>INITIALIZING</span>
+          <span className="text-zinc-300 font-bold tabular-nums">{progress}%</span>
         </div>
 
-        {/* Skip button */}
+        {/* Skip button for fast accessibility */}
         <button
           onClick={() => {
-            setIsFadingOut(true);
-            setTimeout(onComplete, 300);
+            setPhase('out');
+            sessionStorage.setItem('p2p_preloader_seen', 'true');
+            setTimeout(onComplete, 200);
           }}
-          className="mt-6 text-[10px] text-zinc-600 hover:text-zinc-400 transition-colors uppercase tracking-widest font-mono"
+          className="mt-8 text-[10px] font-mono text-zinc-600 hover:text-zinc-300 uppercase tracking-widest transition-colors cursor-pointer"
         >
-          Skip
+          Skip Intro →
         </button>
       </div>
     </div>

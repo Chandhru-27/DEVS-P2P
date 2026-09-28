@@ -6,7 +6,7 @@ export const communityInfo = {
   description:
     'A collaborative, open community of developers, students, and researchers breaking into AI, Machine Learning, and Generative AI. We build projects together, share peer code reviews, and provide real roadmaps.',
   repoUrl: 'https://github.com/Saisrikar20/DEVs-P2P-AI-ML',
-  contactEmail: 'contact@p2pdevs.ai',
+  contactEmail: 'saisrikarB@outlook.com',
 };
 
 export const socialsData: SocialLink[] = [
@@ -36,15 +36,6 @@ export const socialsData: SocialLink[] = [
     description: 'Connect with peers, share project milestones, find study partners, and showcase certifications.',
     primaryColor: '#0A66C2',
     badge: 'Careers & Networking',
-  },
-  {
-    name: 'X / Twitter',
-    platform: 'x',
-    url: 'https://x.com/DevsP2PAI',
-    handle: '@DevsP2PAI',
-    description: 'Bite-sized AI paper breakdowns, trending ML tools, announcements, and weekly Twitter spaces.',
-    primaryColor: '#1DA1F2',
-    badge: 'Daily Updates',
   },
   {
     name: 'YouTube Channel',

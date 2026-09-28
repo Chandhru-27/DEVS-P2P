@@ -1,6 +1,31 @@
 import type { Resource } from '../types';
 
 export const resourcesData: Resource[] = [
+  // PRO FEATURED RESOURCE
+  {
+    id: 'res-ai-eng-from-scratch',
+    title: 'AI Engineering from Scratch (523 Lessons & 20 Phases)',
+    description: 'Learn it. Build it. Ship it for others. 523 lessons across 20 phases from raw math, backprop, and tokenizers to LLMs, Model Context Protocol (MCP), and autonomous swarms.',
+    url: 'https://github.com/rohitg00/ai-engineering-from-scratch',
+    type: 'GitHub',
+    level: 'Intermediate',
+    cost: 'Free',
+    authorOrProvider: 'Rohit G. (rohitg00)',
+    tags: ['From Scratch', '523 Lessons', 'Agents', 'MCP', 'PyTorch', 'Featured Pro'],
+    featured: true,
+  },
+  {
+    id: 'res-ai-eng-web',
+    title: 'AI Engineering from Scratch (Interactive Academy & Labs)',
+    description: 'Web curriculum and certification preparation for Claude & MCP. Code step-by-step, run diagnostic quizzes, and track persistent evidence.',
+    url: 'https://aiengineeringfromscratch.com',
+    type: 'Interactive',
+    level: 'Intermediate',
+    cost: 'Free',
+    authorOrProvider: 'aiengineeringfromscratch.com',
+    tags: ['Interactive', 'MCP', 'Claude', 'Labs', 'Featured Pro'],
+    featured: true,
+  },
   // FOUNDATIONAL & MATH
   {
     id: 'res-3b1b-linear-algebra',

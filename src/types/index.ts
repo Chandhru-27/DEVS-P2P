@@ -71,6 +71,7 @@ export interface SocialLink {
 export interface HostSocials {
   github?: string;
   linkedin?: string;
+  instagram?: string;
   x?: string;
   email?: string;
   portfolio?: string;
