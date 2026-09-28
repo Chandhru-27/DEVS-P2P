@@ -88,3 +88,19 @@ export interface EventHost {
   initials: string;
   socials: HostSocials;
 }
+
+export interface DomainConfig {
+  id: string;
+  slug: string;
+  name: string;
+  shortName: string;
+  badge: string;
+  iconName: string;
+  heroHeadline: string;
+  heroTagline: string;
+  heroCtaText: string;
+  roadmapData: RoadmapPhase[];
+  hostsData: EventHost[];
+  resourcesData: Resource[];
+  projectsData: ProjectIdea[];
+}

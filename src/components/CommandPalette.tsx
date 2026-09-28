@@ -1,27 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Search, 
-  X, 
-  UserCheck, 
-  Compass, 
-  BookOpen, 
-  FolderGit2, 
-  ArrowRight
+import {
+  Search,
+  X,
+  UserCheck,
+  Compass,
+  BookOpen,
+  FolderGit2,
+  ArrowRight,
+  Layers,
 } from 'lucide-react';
-import { GithubIcon, DiscordIcon } from './Icons';
-import { eventHostsData } from '../data/hostsData';
-import { roadmapData } from '../data/roadmapData';
 import { communityInfo } from '../data/socialsData';
+import type { DomainConfig } from '../types';
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
+  currentDomain: DomainConfig;
+  domains: DomainConfig[];
+  onSelectDomain: (slug: string) => void;
   onSelectHost?: (hostId: string) => void;
 }
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({
   isOpen,
   onClose,
+  currentDomain,
+  domains,
+  onSelectDomain,
   onSelectHost,
 }) => {
   const [query, setQuery] = useState('');
@@ -36,10 +41,21 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
   // Build searchable items
   const items = [
-    // Hosts
-    ...eventHostsData.map((h) => ({
+    // Technical Tracks
+    ...domains.map((d) => ({
+      id: `domain-${d.slug}`,
+      title: `Switch to Track: ${d.name} (/${d.slug})`,
+      category: 'Technical Track',
+      icon: <Layers className="w-3.5 h-3.5 text-zinc-400" />,
+      action: () => {
+        onSelectDomain(d.slug);
+        onClose();
+      },
+    })),
+    // Current Domain Hosts
+    ...currentDomain.hostsData.map((h) => ({
       id: h.id,
-      title: `${h.name} — ${h.role}`,
+      title: `${h.name} — ${h.role} (${currentDomain.shortName})`,
       category: 'Event Host',
       icon: <UserCheck className="w-3.5 h-3.5 text-zinc-400" />,
       action: () => {
@@ -48,8 +64,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         onClose();
       },
     })),
-    // Roadmap Phases
-    ...roadmapData.map((p) => ({
+    // Current Domain Roadmap Phases
+    ...currentDomain.roadmapData.map((p) => ({
       id: p.id,
       title: `Phase 0${p.phaseNumber}: ${p.title}`,
       category: 'Roadmap Milestone',
@@ -62,7 +78,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     // Quick Actions
     {
       id: 'action-resources',
-      title: 'Browse Curated Library & Textbooks',
+      title: `Browse ${currentDomain.shortName} Curated Library & Docs`,
       category: 'Navigation',
       icon: <BookOpen className="w-3.5 h-3.5 text-zinc-400" />,
       action: () => {
@@ -72,7 +88,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     },
     {
       id: 'action-projects',
-      title: 'Explore 6 Capstone Proof-of-Work Projects',
+      title: `Explore ${currentDomain.shortName} Proof-of-Work Projects`,
       category: 'Navigation',
       icon: <FolderGit2 className="w-3.5 h-3.5 text-zinc-400" />,
       action: () => {
@@ -82,21 +98,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     },
     {
       id: 'action-github',
-      title: 'Open GitHub Repository (Star / Fork)',
+      title: 'Star GitHub Repository',
       category: 'External',
-      icon: <GithubIcon className="w-3.5 h-3.5 text-zinc-400" />,
+      icon: <ArrowRight className="w-3.5 h-3.5 text-zinc-400" />,
       action: () => {
         window.open(communityInfo.repoUrl, '_blank');
-        onClose();
-      },
-    },
-    {
-      id: 'action-discord',
-      title: 'Join Discord Study Pods',
-      category: 'External',
-      icon: <DiscordIcon className="w-3.5 h-3.5 text-zinc-400" />,
-      action: () => {
-        window.open('https://discord.gg/invite/devs-p2p', '_blank');
         onClose();
       },
     },
@@ -107,13 +113,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     item.category.toLowerCase().includes(query.toLowerCase())
   );
 
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % filteredItems.length);
+      setSelectedIndex((prev) => (prev + 1) % Math.max(1, filteredItems.length));
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % filteredItems.length);
+      setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % Math.max(1, filteredItems.length));
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filteredItems[selectedIndex]) {
@@ -127,32 +137,28 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-[90] flex items-start justify-center pt-20 sm:pt-28 px-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-150"
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-xl rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl card-luminescence overflow-hidden flex flex-col max-h-[75vh]"
-      >
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div 
+        className="fixed inset-0 -z-10" 
+        onClick={onClose} 
+      />
+
+      <div className="w-full max-w-xl rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh]">
         {/* Search header */}
-        <div className="flex items-center px-4 py-3 border-b border-zinc-850">
-          <Search className="w-4 h-4 text-zinc-500 mr-3 shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b border-zinc-800/80">
+          <Search className="w-4 h-4 text-zinc-400 mr-3 shrink-0" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type a host name, topic, or roadmap phase..."
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSelectedIndex(0);
-            }}
+            onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
+            placeholder={`Search ${currentDomain.name}, roadmap, or type 'frontend'/'backend'...`}
             className="w-full bg-transparent text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none"
           />
           <button
             onClick={onClose}
-            className="p-1 rounded text-zinc-500 hover:text-zinc-300 ml-2"
+            className="p-1 rounded text-zinc-500 hover:text-zinc-300 ml-2 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -172,12 +178,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   key={item.id}
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs transition-colors ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs transition-colors cursor-pointer ${
                     isSelected ? 'bg-zinc-900 text-white' : 'text-zinc-300 hover:bg-zinc-900/50'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 truncate">
-                    <span className="p-1.5 rounded-md bg-zinc-950 border border-zinc-850 shrink-0">
+                    <span className="p-1.5 rounded-md bg-zinc-950 border border-zinc-800 shrink-0">
                       {item.icon}
                     </span>
                     <span className="truncate font-medium">{item.title}</span>
@@ -202,7 +208,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             <span>↵ Select</span>
             <span>Esc Close</span>
           </div>
-          <span className="text-[10px] text-zinc-600">DEVs P2P AI/ML</span>
+          <span className="text-[10px] text-zinc-600">DEVs P2P · Multi-Domain Template</span>
         </div>
       </div>
     </div>

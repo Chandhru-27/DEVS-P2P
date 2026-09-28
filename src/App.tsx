@@ -9,32 +9,80 @@ import { Footer } from './components/Footer';
 import { Preloader } from './components/Preloader';
 import { ContributeModal } from './components/ContributeModal';
 import { CommandPalette } from './components/CommandPalette';
-
-import { eventHostsData } from './data/hostsData';
-import { roadmapData } from './data/roadmapData';
-import { resourcesData } from './data/resourcesData';
-import { projectsData } from './data/projectsData';
+import { useDomainRouter } from './hooks/useDomainRouter';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [selectedHostId, setSelectedHostId] = useState<string>(eventHostsData[0]?.id || '');
   const [isContributeOpen, setIsContributeOpen] = useState(false);
 
+  // Dynamic Domain Routing & State Engine
+  const { currentDomain, currentSlug, setDomain, domains } = useDomainRouter();
+
+  const [selectedHostId, setSelectedHostId] = useState<string>(
+    currentDomain.hostsData[0]?.id || ''
+  );
+
+  // Synchronize selected host when domain switches
+  useEffect(() => {
+    setSelectedHostId(currentDomain.hostsData[0]?.id || '');
+  }, [currentDomain]);
+
+  // Per-domain progress persistence
   const [completedTopics, setCompletedTopics] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('devs_p2p_completed_topics');
+      const saved = localStorage.getItem(`devs_p2p_completed_${currentSlug}`);
       return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
+    } catch {
+      return [];
+    }
   });
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`devs_p2p_completed_${currentSlug}`);
+      setCompletedTopics(saved ? JSON.parse(saved) : []);
+    } catch {
+      setCompletedTopics([]);
+    }
+  }, [currentSlug]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(`devs_p2p_completed_${currentSlug}`, JSON.stringify(completedTopics));
+    } catch (e) {
+      console.error('Failed to save completed topics', e);
+    }
+  }, [completedTopics, currentSlug]);
+
+  // Per-domain bookmark persistence
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('devs_p2p_bookmarked_res');
+      const saved = localStorage.getItem(`devs_p2p_bookmarked_${currentSlug}`);
       return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
+    } catch {
+      return [];
+    }
   });
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`devs_p2p_bookmarked_${currentSlug}`);
+      setBookmarkedIds(saved ? JSON.parse(saved) : []);
+    } catch {
+      setBookmarkedIds([]);
+    }
+  }, [currentSlug]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(`devs_p2p_bookmarked_${currentSlug}`, JSON.stringify(bookmarkedIds));
+    } catch (e) {
+      console.error('Failed to save bookmarked resources', e);
+    }
+  }, [bookmarkedIds, currentSlug]);
+
+  // Global Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -46,17 +94,10 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  useEffect(() => {
-    try { localStorage.setItem('devs_p2p_completed_topics', JSON.stringify(completedTopics)); }
-    catch (e) { console.error('Failed to save completed topics', e); }
-  }, [completedTopics]);
-
-  useEffect(() => {
-    try { localStorage.setItem('devs_p2p_bookmarked_res', JSON.stringify(bookmarkedIds)); }
-    catch (e) { console.error('Failed to save bookmarked resources', e); }
-  }, [bookmarkedIds]);
-
-  const totalTopics = roadmapData.reduce((acc, phase) => acc + phase.topics.length, 0);
+  const totalTopics = currentDomain.roadmapData.reduce(
+    (acc, phase) => acc + phase.topics.length,
+    0
+  );
 
   const handleToggleTopic = (topicId: string) => {
     setCompletedTopics((prev) =>
@@ -71,7 +112,9 @@ export const App: React.FC = () => {
   };
 
   const handleResetProgress = () => {
-    if (window.confirm('Reset your progress?')) setCompletedTopics([]);
+    if (window.confirm(`Reset your ${currentDomain.shortName} progress?`)) {
+      setCompletedTopics([]);
+    }
   };
 
   const scrollToRoadmap = () => {
@@ -85,46 +128,72 @@ export const App: React.FC = () => {
       <Navbar
         completedCount={completedTopics.length}
         totalTopics={totalTopics}
+        currentSlug={currentSlug}
+        currentDomain={currentDomain}
+        domains={domains}
+        onSelectDomain={setDomain}
         onOpenContribute={() => setIsContributeOpen(true)}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
 
       <main className="flex-1">
-        {/* 1. Hero — value prop */}
-        <Hero onExploreRoadmap={scrollToRoadmap} />
+        {/* 1. Hero — Value prop & Domain Quick Switcher */}
+        <Hero
+          currentDomain={currentDomain}
+          domains={domains}
+          onSelectDomain={setDomain}
+          onExploreRoadmap={scrollToRoadmap}
+        />
 
-        {/* 2. Roadmap — the core product, comes first */}
+        {/* 2. Dynamic Roadmap — The core curriculum */}
         <RoadmapView
-          phases={roadmapData}
+          key={`roadmap-${currentSlug}`}
+          phases={currentDomain.roadmapData}
           completedTopics={completedTopics}
           onToggleTopic={handleToggleTopic}
           onResetProgress={handleResetProgress}
         />
 
-        {/* 3. Hosts — who teaches it */}
+        {/* 3. Dynamic 3D Rotatory Linktree Hosts — Domain Mentors */}
         <EventHostsSection
-          hosts={eventHostsData}
+          key={`hosts-${currentSlug}`}
+          hosts={currentDomain.hostsData}
           selectedHostId={selectedHostId}
           onSelectHost={(id) => setSelectedHostId(id)}
         />
 
-        {/* 4. Resources — what to study */}
+        {/* 4. Curated Resources Directory */}
         <ResourcesDirectory
-          resources={resourcesData}
+          key={`resources-${currentSlug}`}
+          resources={currentDomain.resourcesData}
           bookmarkedIds={bookmarkedIds}
           onToggleBookmark={handleToggleBookmark}
         />
 
-        {/* 5. Projects — what to build */}
-        <ProjectsSection projects={projectsData} />
+        {/* 5. Proof-of-Work Projects */}
+        <ProjectsSection
+          key={`projects-${currentSlug}`}
+          projects={currentDomain.projectsData}
+        />
       </main>
 
-      <Footer />
+      <Footer
+        currentSlug={currentSlug}
+        domains={domains}
+        onSelectDomain={setDomain}
+      />
 
-      <ContributeModal isOpen={isContributeOpen} onClose={() => setIsContributeOpen(false)} />
+      <ContributeModal
+        isOpen={isContributeOpen}
+        onClose={() => setIsContributeOpen(false)}
+      />
+
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}
+        currentDomain={currentDomain}
+        domains={domains}
+        onSelectDomain={setDomain}
         onSelectHost={(id) => {
           setSelectedHostId(id);
           document.getElementById('hosts')?.scrollIntoView({ behavior: 'smooth' });
