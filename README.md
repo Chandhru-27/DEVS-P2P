@@ -28,7 +28,7 @@ Navigate directly to any domain via URL path or the in-app track switcher:
 | Route | Domain Track | Lead Mentors | Focus Area |
 | :--- | :--- | :--- | :--- |
 | **[`/aiml`](http://localhost:5173/aiml)** | **AI & Machine Learning** *(Core Flagship)* | **Sai Srikar B**, Sabhari Sainath, Padma Sree | Neural Architectures, PyTorch, Local RAG, Model Serving |
-| **[`/frontend`](http://localhost:5173/frontend)** | **Frontend Engineering** | Aryan Sharma, Rhea Nair, Karthik Verma | React 19, TypeScript, Next.js 15, WebGL, Web Vitals |
+| **[`/frontend`](http://localhost:5173/frontend)** | **Frontend Engineering** | **ASVAND K**, **Chandhru L** | UI Architecture, JavaScript, React, Performance, Accessibility |
 | **[`/backend`](http://localhost:5173/backend)** | **Backend Systems** | Vikram Roy, Sneha Rao, Anirudh Kumar | Go, PostgreSQL Internals, Redis, Kafka, Raft Consensus |
 | **[`/cloud`](http://localhost:5173/cloud)** | **Cloud & DevOps** | Rohan Deshmukh, Ananya Sen | Linux, Docker, Terraform, Kubernetes GitOps, Prometheus |
 | **[`/iot`](http://localhost:5173/iot)** | **IoT & Embedded Systems** | Adithya Ram | Bare-Metal C, FreeRTOS, MQTT, TinyML, Hardware Security |
