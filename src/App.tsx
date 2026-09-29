@@ -121,9 +121,19 @@ export const App: React.FC = () => {
     document.getElementById('roadmap')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Synchronize browser tab title dynamically with active domain
+  useEffect(() => {
+    document.title = `DEVs P2P · ${currentDomain.name} | Complete Roadmap & Mentorship`;
+  }, [currentDomain]);
+
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-100 flex flex-col font-sans selection:bg-white/10 selection:text-white">
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      {loading && (
+        <Preloader
+          domainName={currentDomain.name}
+          onComplete={() => setLoading(false)}
+        />
+      )}
 
       <Navbar
         completedCount={completedTopics.length}

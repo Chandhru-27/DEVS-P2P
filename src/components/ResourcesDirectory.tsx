@@ -33,6 +33,17 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
   const [visibleCount, setVisibleCount] = useState<number>(6);
   const [copiedCmd, setCopiedCmd] = useState(false);
 
+  // Dynamically find the active domain's featured resource
+  const featuredResource = useMemo(() => {
+    return resources.find((r) => r.featured) || resources[0];
+  }, [resources]);
+
+  const isAiEngineeringTutor = Boolean(
+    featuredResource &&
+      (featuredResource.url.includes('aiengineeringfromscratch') ||
+        featuredResource.title.toLowerCase().includes('ai engineering from scratch'))
+  );
+
   const tutorCommand = 'npx skills add rohitg00/ai-engineering-from-scratch';
 
   const handleCopyTutor = () => {
@@ -41,7 +52,15 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
     setTimeout(() => setCopiedCmd(false), 2000);
   };
 
-  const categories: (ResourceType | 'All')[] = ['All', 'GitHub', 'Course', 'Book', 'Video', 'Paper'];
+  const categories: (ResourceType | 'All')[] = [
+    'All',
+    'GitHub',
+    'Course',
+    'Book',
+    'Video',
+    'Documentation',
+    'Paper',
+  ];
 
   const filteredResources = useMemo(() => {
     return resources.filter((res) => {
@@ -57,12 +76,18 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
 
   const getTypeIcon = (type: ResourceType) => {
     switch (type) {
-      case 'Course': return <GraduationCap className="w-3.5 h-3.5" />;
-      case 'Book': return <BookOpen className="w-3.5 h-3.5" />;
-      case 'GitHub': return <FolderGit2 className="w-3.5 h-3.5" />;
-      case 'Paper': return <FileText className="w-3.5 h-3.5" />;
-      case 'Video': return <Video className="w-3.5 h-3.5" />;
-      default: return <Layers className="w-3.5 h-3.5" />;
+      case 'Course':
+        return <GraduationCap className="w-3.5 h-3.5" />;
+      case 'Book':
+        return <BookOpen className="w-3.5 h-3.5" />;
+      case 'GitHub':
+        return <FolderGit2 className="w-3.5 h-3.5" />;
+      case 'Paper':
+        return <FileText className="w-3.5 h-3.5" />;
+      case 'Video':
+        return <Video className="w-3.5 h-3.5" />;
+      default:
+        return <Layers className="w-3.5 h-3.5" />;
     }
   };
 
@@ -85,61 +110,90 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
           </div>
         </AnimateIn>
 
-        {/* Featured Pro Resource */}
-        <AnimateIn delay={100}>
-          <div className="mb-8 sm:mb-10 rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 sm:p-7">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] text-white border border-white/[0.08] text-xs font-medium">
-                <Sparkles className="w-3 h-3 text-zinc-300" />
-                <span>Featured</span>
-              </span>
-              <span className="text-xs text-zinc-400">by Rohit G.</span>
-            </div>
+        {/* Dynamic Domain Featured Resource */}
+        {featuredResource && (
+          <AnimateIn delay={100}>
+            <div className="mb-8 sm:mb-10 rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 sm:p-7">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] text-white border border-white/[0.08] text-xs font-medium">
+                    <Sparkles className="w-3 h-3 text-zinc-300" />
+                    <span>Featured</span>
+                  </span>
+                  <span className="text-xs text-zinc-400">by {featuredResource.authorOrProvider}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-zinc-300 border border-white/[0.06]">
+                    {featuredResource.type}
+                  </span>
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400 border border-white/[0.06]">
+                    {featuredResource.cost}
+                  </span>
+                </div>
+              </div>
 
-            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              AI Engineering from Scratch
-            </h3>
-            <p className="text-xs sm:text-sm text-zinc-300 mt-2 max-w-3xl leading-relaxed">
-              <strong className="text-white">523 lessons across 20 phases.</strong> A hands-on curriculum from mathematics and autograd to transformers, MCP, and autonomous agent swarms.
-            </p>
+              <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                {featuredResource.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-300 mt-2 max-w-3xl leading-relaxed">
+                {featuredResource.description}
+              </p>
 
-            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <button
-                onClick={handleCopyTutor}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/[0.06] text-[11px] sm:text-xs font-mono text-zinc-300 transition-all cursor-pointer max-w-full"
-              >
-                <span className="text-zinc-500">$</span>
-                <span className="truncate">{tutorCommand}</span>
-                {copiedCmd ? (
-                  <Check className="w-3.5 h-3.5 text-zinc-200 shrink-0" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+              {/* Key tags */}
+              {featuredResource.tags && featuredResource.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {featuredResource.tags.map((tag, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.04] text-zinc-400 border border-white/[0.06]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2.5 sm:gap-3">
+                {isAiEngineeringTutor && (
+                  <button
+                    onClick={handleCopyTutor}
+                    className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/[0.06] text-[11px] sm:text-xs font-mono text-zinc-300 transition-all cursor-pointer max-w-full"
+                  >
+                    <span className="text-zinc-500">$</span>
+                    <span className="truncate">{tutorCommand}</span>
+                    {copiedCmd ? (
+                      <Check className="w-3.5 h-3.5 text-zinc-200 shrink-0" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                    )}
+                  </button>
                 )}
-              </button>
 
-              <a
-                href="https://github.com/rohitg00/ai-engineering-from-scratch"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
-              >
-                <GithubIcon className="w-3.5 h-3.5" />
-                <span>Repository</span>
-                <ExternalLink className="w-3 h-3 text-zinc-500" />
-              </a>
+                <a
+                  href={featuredResource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-black text-xs font-semibold transition-all shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:scale-102 active:scale-98 cursor-pointer"
+                >
+                  <span>Open Resource</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-black" />
+                </a>
 
-              <a
-                href="https://aiengineeringfromscratch.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
-              >
-                <span>Course Website</span>
-                <ExternalLink className="w-3 h-3 text-zinc-500" />
-              </a>
+                {featuredResource.url.includes('github.com') && (
+                  <a
+                    href={featuredResource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>Repository</span>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        </AnimateIn>
+          </AnimateIn>
+        )}
 
         {/* Search & Filter */}
         <AnimateIn delay={150}>
@@ -155,14 +209,14 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
               />
             </div>
 
-            <div className="flex items-center gap-1.5 overflow-x-auto">
+            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedType(cat)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                     selectedType === cat
-                      ? 'bg-white/[0.1] text-white'
+                      ? 'bg-white/[0.1] text-white font-semibold'
                       : 'bg-white/[0.02] text-zinc-400 hover:text-zinc-200 border border-white/[0.06]'
                   }`}
                 >

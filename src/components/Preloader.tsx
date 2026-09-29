@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 interface PreloaderProps {
   onComplete: () => void;
+  domainName?: string;
 }
 
-export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
+export const Preloader: React.FC<PreloaderProps> = ({ onComplete, domainName }) => {
   const [phase, setPhase] = useState<'in' | 'out'>('in');
   const [progress, setProgress] = useState(0);
 
@@ -60,7 +61,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         {/* Subtle Category Pill */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-400 text-[11px] font-mono tracking-widest uppercase mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-          <span>Peer-to-Peer AI & Machine Learning</span>
+          <span>DEVs P2P · {domainName ? `${domainName}` : 'Technical Curriculum'}</span>
         </div>
 
         {/* Sleek Minimalist Progress Bar */}
