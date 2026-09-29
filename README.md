@@ -41,8 +41,7 @@ Navigate directly to any domain via URL path or the in-app track switcher:
 The foundational AI/ML track created by **Sai Srikar B** and team remains the flagship curriculum:
 
 ### Track Mentors & Organizers
-- **Sai Srikar B** (`Lead Organizer & AI Systems Architect`):
-  - Founder @ DEVs P2P • AI & Data Science (Cybersecurity Honours, SGPA 8.98/10)
+- **Sai Srikar B** (`Lead Organizer & AI Systems Architect`)
   - Portfolio: [saisrikar20.github.io](https://saisrikar20.github.io) • GitHub: [@Saisrikar20](https://github.com/Saisrikar20) • LinkedIn: [saisrikarb](https://www.linkedin.com/in/saisrikarb/) • Instagram: [@\_\_saisrikar\_\_](https://www.instagram.com/__saisrikar__/)
 - **Sabhari Sainath** (`Co-Organizer & MLOps Lead`):
   - FastAPI Model Serving, Docker Containerization & Production ML
