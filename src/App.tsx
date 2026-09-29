@@ -140,8 +140,6 @@ export const App: React.FC = () => {
         {/* 1. Hero — Value prop & Domain Quick Switcher */}
         <Hero
           currentDomain={currentDomain}
-          domains={domains}
-          onSelectDomain={setDomain}
           onExploreRoadmap={scrollToRoadmap}
         />
 

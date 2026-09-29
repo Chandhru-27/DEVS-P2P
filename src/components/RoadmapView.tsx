@@ -30,33 +30,33 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   });
 
   return (
-    <section id="roadmap" className="relative py-20 md:py-28 overflow-hidden">
+    <section id="roadmap" className="relative py-14 sm:py-20 md:py-28 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <AnimateIn>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-3 sm:mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
                 <span>Curriculum</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                 Learning Roadmap
               </h2>
-              <p className="mt-3 text-sm text-zinc-400 max-w-lg leading-relaxed">
-                Six phases from mathematical foundations to production ML systems. Track your progress as you go.
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-zinc-400 max-w-lg leading-relaxed">
+                Step-by-step milestones from fundamentals to production systems. Track your progress as you learn.
               </p>
 
               {/* Inline progress */}
-              <div className="mt-5 flex items-center gap-3">
-                <div className="w-40 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+              <div className="mt-4 sm:mt-5 flex items-center gap-3">
+                <div className="w-32 sm:w-40 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                   <div
                     className="h-full rounded-full bg-white/40 transition-all duration-500"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
                 <span className="text-xs font-mono text-zinc-400">
-                  {completedCount} / {totalTopics} completed
+                  {completedCount} / {totalTopics}
                 </span>
                 {completedCount > 0 && onResetProgress && (
                   <button
@@ -72,12 +72,12 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
 
             {/* Controls */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center p-0.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs">
+              <div className="flex items-center p-0.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs overflow-x-auto max-w-full">
                 {(['All', 'Beginner', 'Intermediate', 'Advanced'] as const).map((lvl) => (
                   <button
                     key={lvl}
                     onClick={() => setLevelFilter(lvl)}
-                    className={`px-3 py-1.5 rounded-md transition-all cursor-pointer ${
+                    className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md transition-all cursor-pointer whitespace-nowrap text-xs ${
                       levelFilter === lvl
                         ? 'bg-white/[0.1] text-white font-semibold'
                         : 'text-zinc-400 hover:text-zinc-200'
@@ -90,7 +90,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
 
               <button
                 onClick={() => setExpandAll(!expandAll)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs text-zinc-300 transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs text-zinc-300 transition-colors cursor-pointer whitespace-nowrap"
               >
                 {expandAll ? (
                   <>
@@ -109,16 +109,16 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         </AnimateIn>
 
         {/* Timeline */}
-        <div className="relative pl-8 sm:pl-10">
+        <div className="relative pl-6 sm:pl-10">
           {/* Animated vertical line */}
-          <div className="absolute left-[11px] sm:left-[15px] top-0 bottom-0 w-[2px] bg-white/10 timeline-glow rounded-full" />
+          <div className="absolute left-[9px] sm:left-[15px] top-0 bottom-0 w-[2px] bg-white/10 timeline-glow rounded-full" />
 
-          <div className="space-y-5">
+          <div className="space-y-4 sm:space-y-5">
             {filteredPhases.map((phase, idx) => (
               <AnimateIn key={phase.id} delay={idx * 80}>
                 <div className="relative">
                   {/* Timeline node */}
-                  <div className="absolute -left-[25px] sm:-left-[29px] top-7 w-3 h-3 rounded-full bg-zinc-950 border-2 border-white/30 z-10" />
+                  <div className="absolute -left-[21px] sm:-left-[29px] top-6 sm:top-7 w-3 h-3 rounded-full bg-zinc-950 border-2 border-white/30 z-10" />
 
                   <PhaseCard
                     phase={phase}

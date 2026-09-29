@@ -260,12 +260,36 @@ export const AsciiHandsCanvas: React.FC = () => {
     mouseRef.current.y = -1000;
   };
 
+  // Handle Touch interactions for mobile devices
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas || !e.touches[0]) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = ASCII_HANDS_WIDTH / rect.width;
+    const scaleY = ASCII_HANDS_HEIGHT / rect.height;
+
+    mouseRef.current = {
+      x: (e.touches[0].clientX - rect.left) * scaleX,
+      y: (e.touches[0].clientY - rect.top) * scaleY,
+      active: true,
+    };
+  };
+
+  const handleTouchEnd = () => {
+    mouseRef.current.active = false;
+    mouseRef.current.x = -1000;
+    mouseRef.current.y = -1000;
+  };
+
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full overflow-hidden select-none flex flex-col items-center cursor-crosshair"
+      onTouchStart={handleTouchMove}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="relative w-full overflow-hidden select-none flex flex-col items-center cursor-crosshair touch-none"
     >
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 sm:w-[650px] h-96 sm:h-[650px] bg-white/[0.02] blur-[140px] rounded-full pointer-events-none -z-0" />

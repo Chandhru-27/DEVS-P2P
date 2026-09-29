@@ -16,30 +16,30 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
   });
 
   return (
-    <section id="projects" className="relative py-20 md:py-28 overflow-hidden">
+    <section id="projects" className="relative py-14 sm:py-20 md:py-28 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <AnimateIn>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-3 sm:mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
                 <span>Portfolio</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                 Capstone Projects
               </h2>
-              <p className="mt-3 text-sm text-zinc-400 max-w-lg leading-relaxed">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-zinc-400 max-w-lg leading-relaxed">
                 Build real projects at each milestone to solidify your skills and grow your portfolio.
               </p>
             </div>
 
-            <div className="flex items-center p-0.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs self-start sm:self-auto">
+            <div className="flex items-center p-0.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs self-start sm:self-auto overflow-x-auto max-w-full">
               {(['All', 'Beginner', 'Intermediate', 'Advanced'] as const).map((lvl) => (
                 <button
                   key={lvl}
                   onClick={() => setDifficultyFilter(lvl)}
-                  className={`px-3 py-1.5 rounded-md transition-all cursor-pointer ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md transition-all cursor-pointer whitespace-nowrap text-xs ${
                     difficultyFilter === lvl
                       ? 'bg-white/[0.1] text-white font-semibold'
                       : 'text-zinc-400 hover:text-zinc-200'

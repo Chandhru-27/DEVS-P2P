@@ -67,19 +67,19 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
   };
 
   return (
-    <section id="resources" className="relative py-20 md:py-28 overflow-hidden">
+    <section id="resources" className="relative py-14 sm:py-20 md:py-28 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <AnimateIn>
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-4">
+          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-zinc-400 text-xs font-medium mb-3 sm:mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
               <span>Resources</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
               Curated Learning Library
             </h2>
-            <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+            <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-zinc-400 leading-relaxed px-2">
               Hand-picked textbooks, courses, and repositories supporting every roadmap phase.
             </p>
           </div>
@@ -87,7 +87,7 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
 
         {/* Featured Pro Resource */}
         <AnimateIn delay={100}>
-          <div className="mb-10 rounded-2xl border border-white/[0.1] bg-white/[0.03] p-6 sm:p-7">
+          <div className="mb-8 sm:mb-10 rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 sm:p-7">
             <div className="flex items-center gap-2 mb-3">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] text-white border border-white/[0.08] text-xs font-medium">
                 <Sparkles className="w-3 h-3 text-zinc-300" />
@@ -96,24 +96,24 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
               <span className="text-xs text-zinc-400">by Rohit G.</span>
             </div>
 
-            <h3 className="text-xl font-bold text-white tracking-tight">
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
               AI Engineering from Scratch
             </h3>
-            <p className="text-sm text-zinc-300 mt-2 max-w-3xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-300 mt-2 max-w-3xl leading-relaxed">
               <strong className="text-white">523 lessons across 20 phases.</strong> A hands-on curriculum from mathematics and autograd to transformers, MCP, and autonomous agent swarms.
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2.5 sm:gap-3">
               <button
                 onClick={handleCopyTutor}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/[0.06] text-xs font-mono text-zinc-300 transition-all cursor-pointer"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/[0.06] text-[11px] sm:text-xs font-mono text-zinc-300 transition-all cursor-pointer max-w-full"
               >
                 <span className="text-zinc-500">$</span>
-                <span>{tutorCommand}</span>
+                <span className="truncate">{tutorCommand}</span>
                 {copiedCmd ? (
-                  <Check className="w-3.5 h-3.5 text-zinc-200" />
+                  <Check className="w-3.5 h-3.5 text-zinc-200 shrink-0" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5 text-zinc-500" />
+                  <Copy className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
                 )}
               </button>
 
@@ -121,7 +121,7 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
                 href="https://github.com/rohitg00/ai-engineering-from-scratch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>Repository</span>
@@ -132,7 +132,7 @@ export const ResourcesDirectory: React.FC<ResourcesDirectoryProps> = ({
                 href="https://aiengineeringfromscratch.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-200 transition-all"
               >
                 <span>Course Website</span>
                 <ExternalLink className="w-3 h-3 text-zinc-500" />
