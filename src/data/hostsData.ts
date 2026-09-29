@@ -5,11 +5,11 @@ export const eventHostsData: EventHost[] = [
     id: 'host-1',
     name: 'Sai Srikar B',
     role: 'Lead Organizer & AI Systems Architect',
-    headline: 'Founder @ DEVs P2P • AI & Data Science (Cybersecurity Honours)',
+    headline: 'AI & Data Science (Cybersecurity Honours)',
     topicOrFocus: 'Neural Network Architectures, Local RAG Systems & AI Security',
     bio: 'AI & Data Science (Cybersecurity Honours, SGPA 8.98/10). Specializing in production ML pipelines, local inference systems, and secure AI architectures with prompt-defense mechanisms.',
     avatarUrl: '/sai-anime-pfp.jpg',
-    initials: 'SB',
+    initials: 'B',
     socials: {
       github: 'https://github.com/Saisrikar20',
       linkedin: 'https://www.linkedin.com/in/saisrikarb/',
